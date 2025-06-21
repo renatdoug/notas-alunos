@@ -7,7 +7,6 @@ import re
 # Constantes
 SCOPE = ["https://spreadsheets.google.com/feeds",
          "https://www.googleapis.com/auth/drive"]
-CRED_FILE = "credenciais.json"
 SHEET_NAME = "Boletins"
 WORKSHEET_NOTAS = "Notas_Tabela"
 
@@ -156,10 +155,11 @@ def display_boletim(resultado):
                    ", ".join(componentes_recuperacao))
 
 
-# Autenticação
+# Autenticação via st.secrets
 try:
-    client = gspread.authorize(
-        ServiceAccountCredentials.from_json_keyfile_name(CRED_FILE, SCOPE))
+    creds_dict = dict(st.secrets["google_credentials"])
+    creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, SCOPE)
+    client = gspread.authorize(creds)
 except Exception as e:
     st.error(f"Erro ao autenticar com Google Sheets: {e}")
     st.stop()
