@@ -169,7 +169,7 @@ except Exception as e:
 df = load_data(client, SHEET_NAME, WORKSHEET_NOTAS)
 
 # Título
-st.title("Consulta de Notas - Filtragem por Turma e Segurança")
+st.title("Consulta de Notas")
 
 # Botão de nova consulta
 if "consultado" in st.session_state and st.button("Nova consulta"):
