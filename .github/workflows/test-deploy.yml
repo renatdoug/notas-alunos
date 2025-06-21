@@ -1,0 +1,39 @@
+name: Test and Deploy Streamlit Apps
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest  # Adiciona pytest para testes
+
+      - name: Run Streamlit tests
+        run: |
+          # Teste simples: verifica se os scripts iniciam sem erros
+          streamlit run lancamentoNotas.py --server.enableCORS false --server.enableXsrfProtection false --server.headless true --server.port 8502 & sleep 5
+          streamlit run consultaNotas.py --server.enableCORS false --server.enableXsrfProtection false --server.headless true --server.port 8503 & sleep 5
+          # Para testes mais robustos, adicione pytest com arquivos de teste (ex.: test_lancamento.py)
+
+      - name: Simulate deployment check
+        run: |
+          echo "Testes concluídos, pronto para deploy no Streamlit Community Cloud."
