@@ -127,12 +127,12 @@ def display_boletim(resultado):
                       for comp in boletim['Componente Curricular']]
 
     def colorir_nota(val):
-    if isinstance(val, (int, float)):
-        if val < 7:
-            return 'background-color: #ffd6d6; color: black; font-weight: bold'  # tom de vermelho claro
-        else:
-            return 'background-color: #d6ecff; color: black; font-weight: bold'  # tom de azul claro
-    return ''
+             if isinstance(val, (int, float)):
+                      if val < 7:
+                               return 'background-color: #ffd6d6; color: black; font-weight: bold'  # tom de vermelho claro
+                      else:
+                               return 'background-color: #d6ecff; color: black; font-weight: bold'  # tom de azul claro
+             return ''
 
 
     st.success("Notas encontradas:")
